@@ -1,4 +1,5 @@
 import { contactsCollection } from '../db/models/contacts.js';
+import { ObjectId } from 'mongodb';
 
 export const getAllContacts = async () => {
   const contacts = await contactsCollection.find();
@@ -24,12 +25,10 @@ export const deleteContact = async (contactId) => {
 
 export const updateContact = async (contactId, payload, options = {}) => {
   const rawResult = await contactsCollection.findOneAndUpdate(
+    { _id: new ObjectId(contactId) },
+    { $set: payload },
     {
-      _id: contactId,
-    },
-    payload,
-    {
-      new: true,
+      returnDocument: 'after',
       includeResultMetadata: true,
       ...options,
     },

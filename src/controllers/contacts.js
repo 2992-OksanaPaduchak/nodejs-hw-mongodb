@@ -52,15 +52,6 @@ export const deleteContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const { contactId } = req.params;
-  const { name, phoneNumber, contactType } = req.body;
-
-  if (!name || !phoneNumber || !contactType) {
-    throw createHttpError(
-      400,
-      'Missing required fields. required fields: name, phoneNumber, contactType',
-    );
-  }
-
   const result = await updateContact(contactId, req.body);
 
   if (!result) {
