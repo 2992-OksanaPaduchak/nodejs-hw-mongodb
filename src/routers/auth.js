@@ -40,10 +40,10 @@ router.post(
   ctrlWrapper(requestResetEmailController),
 );
 
-export default router;
-
 router.post(
-  '/reset-password',
+  '/reset-pwd',
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
+
+export default router;
