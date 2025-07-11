@@ -1,0 +1,67 @@
+tags:
+  - Contacts
+summary: Update contact by id
+operationId: UpdateContact
+description: Partially update a contact by its unique identifier.
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            description: "Contact's name"
+            example: 'John Doe'
+          phoneNumber:
+            type: string
+            description: "Contact's phone number"
+            example: '+380000000004'
+          email:
+            type: string
+            description: 'Email address of the contact'
+            example: 'johnDoe@mail.com'
+          isFavourite:
+            type: boolean
+            description: 'Marks the contact as favourite'
+            example: false
+          contactType:
+            type: string
+            description: "Contact's type"
+            enum: [work, home, personal]
+          photo:
+            type: string
+            format: binary
+            description: 'Photo file to upload'
+responses:
+  '200':
+    description: Successfully patched a contact!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a contact!
+            data:
+              type: object
+              $ref: '../../../components/schemas/contact.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
